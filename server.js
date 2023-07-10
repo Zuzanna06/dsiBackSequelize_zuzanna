@@ -1,38 +1,43 @@
-﻿require("rootpath")();
-const express = require("express");
-const cors = require("cors");
-const multer = require("multer");
-const mysql = require("mysql");
-const app = express();
-const errorHandler = require("_middleware/error-handler");
-const port = 3004;
+﻿//Ce code configure et démarre le serveur. 
 
-app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+require("rootpath")();              //Cette ligne est utilisée pour définir le chemin racine du projet en utilisant le package rootpath.
+const express = require("express"); //Importe le framework Express pour la création de l'application web.
+const cors = require("cors");       //Importe le module cors pour gérer les autorisations CORS (Cross-Origin Resource Sharing).
+const multer = require("multer");   //Importe le module multer pour la gestion des téléchargements de fichiers.
+const mysql = require("mysql");     //Importe le module mysql pour interagir avec la base de données MySQL.
+const app = express();              //Crée une instance de l'application Express.
+const errorHandler = require("_middleware/error-handler");  // Importe le middleware error-handler pour gérer les erreurs globalement dans l'application.
+const port = 3004;                  //Définit le numéro de port sur lequel le serveur écoutera les requêtes.
+
+app.use(cors());                    //Active le middleware cors pour toutes les routes de ton serveur, ce qui permettra les requêtes cross-origin.
+app.use(express.json());            //Active le middleware express.json() pour analyser le corps des requêtes au format JSON.
+app.use(express.urlencoded({ extended: true }));    //Active le middleware express.urlencoded() pour analyser le corps des requêtes avec des données encodées au format URL.
 
 // api routes
-app.use("/users", require("./users/user.controller"));
+app.use("/users", require("./users/user.controller")); //Associe les routes définies dans le fichier ./users/user.controller.js aux URL qui commencent par "/users".
 
 // global error handler
-app.use(errorHandler);
+app.use(errorHandler); //Active le middleware errorHandler pour gérer les erreurs globalement dans l'application.
 
-const db = mysql.createConnection({
+const db = mysql.createConnection({     
+  //Crée une connexion à la base de données MySQL en utilisant les informations de connexion fournies.
   host: "localhost",
   user: "root",
-  password: "root",
+  password: "rootroot",
   port: 3306,
   database: "dsimed",
 });
 
-// Se connecter à la base de données
+
 db.connect((err) => {
+  //Se connecte à la base de données en utilisant la connexion créée et affiche un message dans la console si la connexion est réussie.
   if (err) throw err;
   console.log("Connecté à la base de données");
 });
 
-// Configurer le stockage Multer pour les téléchargements de fichiers
+
 const storage = multer.diskStorage({
+//Configure le stockage pour les téléchargements de fichiers en utilisant le module multer. Dans cet exemple, les fichiers télécharg
   destination: "uploads/",
   upload: (req, fichier, cb) => {
     //  Générer un nom de fichier unique en ajoutant un horodatage au nom de fichier d’origine
@@ -71,3 +76,8 @@ app.post("/upload", upload.single("file"), (req, res) => {
 });
 
 module.exports = { app, port, db };
+
+//les propriétés app, port et db. Cela permet à d'autres fichiers de les importer 
+//en utilisant la syntaxe require et d'accéder à ces valeurs. 
+
+

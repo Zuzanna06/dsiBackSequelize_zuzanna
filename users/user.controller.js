@@ -7,6 +7,9 @@ const userService = require("./user.service");
 const jwt = require("jsonwebtoken");
 const authenticateToken = require("_middleware/token");
 
+// Ce code définir un module qui gère les routes liées aux utilisateurs dans une application Node.js 
+//avec l'utilisation de l'express.Router()
+
 
 // routes
 
@@ -82,3 +85,20 @@ function updateSchema(req, res, next) {
 }
 
 module.exports = router;
+
+
+//Ce code définit les routes suivantes pour les utilisateurs :
+
+//GET / : Récupère tous les utilisateurs.
+//GET /:id : Récupère un utilisateur par son ID.
+//POST / : Crée un nouvel utilisateur en utilisant les données fournies dans le corps de la requête.
+//PUT /:id : Met à jour un utilisateur existant avec l'ID spécifié dans les paramètres de la requête.
+//DELETE /:id : Supprime un utilisateur avec l'ID spécifié dans les paramètres de la requête.
+
+//Les fonctions de route correspondantes (getAll, getById, create, update, _delete) 
+//appellent les fonctions appropriées du service utilisateur pour effectuer les opérations 
+//correspondantes sur la base de données.
+
+//De plus, il existe des fonctions de schéma (createSchema, updateSchema) 
+//qui définissent les schémas de validation pour les données d'entrée lors de la création 
+//et de la mise à jour d'un utilisateur. Ces fonctions utilisent la bibliothèque Joi pour valider les données.

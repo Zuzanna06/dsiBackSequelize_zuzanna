@@ -4,6 +4,10 @@ const { db } = require("../server");
 const authenticateToken = require("_middleware/token");
 
 
+//module qui gère l'authentification des utilisateurs dans mon application Node.js 
+//avec l'utilisation de la bibliothèque bcrypt pour le hachage des mots de passe 
+//et jsonwebtoken pour la génération de tokens JWT.
+
 const crypto = require("crypto");
 
 // Génère une clé secrète sécurisée de 128 bits (16 octets)
@@ -69,3 +73,17 @@ const path = (app) => {
 };
 
 module.exports = path, authenticateToken;
+
+
+
+//Ce code génère une clé secrète sécurisée en utilisant la fonction generateSecretKey 
+//de la bibliothèque crypto. Cette clé secrète est ensuite utilisée pour signer les tokens JWT.
+
+//Le module exporte également une fonction path qui définit une route POST /login. 
+//Lorsqu'une demande est effectuée à cette route, le code récupère l'email et le mot de passe fournis 
+//dans le corps de la requête. Ensuite, il interroge la base de données pour récupérer le hachage 
+//du mot de passe associé à l'email donné. Si l'email n'existe pas dans la base de données, 
+//une réponse d'erreur est renvoyée. Sinon, le code utilise bcrypt.compare 
+//pour comparer le mot de passe fourni avec le hachage de la base de données. 
+//Si la comparaison est réussie, un token JWT est généré en utilisant la clé secrète précédemment générée 
+//et renvoyé dans la réponse.
